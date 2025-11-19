@@ -19,7 +19,7 @@ const { title, description, createdAt, categories, tags, image, imageAlt } =
 const descriptionLength = 200;
 
 // 检查是否有自定义图片
-const hasCustomImage = image && image !== defaultImage;
+const hasCustomImage = !!(image && typeof image === "object" && "src" in image);
 const displayImageAlt = imageAlt || `${title} - 默认图片`;
 
 const entryDate = createdAt ? formatDate(createdAt) : null;

@@ -34,7 +34,7 @@ const {
 const descriptionLength = 80; // 更精简的描述长度
 
 // 使用默认图片如果没有设置图片
-const displayImage = image || defaultImage;
+const displayImage = image && typeof image === "object" && "src" in image ? image : defaultImage;
 const displayImageAlt = imageAlt || `${title} - 默认图片`;
 
 const entryDate = createdAt ? formatDate(createdAt) : null;

@@ -24,7 +24,7 @@ const { title, description, createdAt, categories, tags, image, imageAlt } =
 const descriptionLength = 100; // 列表页描述稍短
 
 // 检查是否有自定义图片
-const hasCustomImage = image && image !== defaultImage;
+const hasCustomImage = !!(image && typeof image === "object" && "src" in image);
 // console.log("图片：", image);
 const displayImageAlt = imageAlt || `${title} - 默认图片`;
 
@@ -50,14 +50,14 @@ const entryDescription = description?.substring(0, descriptionLength) || "";
     >
       <a href={`/blog/${entry.id}`}>
         {hasCustomImage ? (
-            <Image
-              class="w-full h-full rounded-lg object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
-              src={image}
-              alt={displayImageAlt}
-              inferSize={true}
-              loading="lazy"
-              format="webp"
-              quality={40}
+          <Image
+            class="w-full h-full rounded-lg object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+            src={image}
+            alt={displayImageAlt}
+            inferSize={true}
+            loading="lazy"
+            format="webp"
+            quality={40}
               decoding="async"
               fetchpriority="high"
             />

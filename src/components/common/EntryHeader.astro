@@ -89,7 +89,7 @@ tags?.sort((a: string, b: string) => a.localeCompare(b));
         textClass={`${image && showImage ? "" : "border border-white/10 dark:border-white/5"}`}
       >
         {/* 背景图片层 */}
-        {image && showImage && (
+        {image && typeof image === "object" && "src" in image && showImage && (
           <div class="absolute inset-0">
             <Image
               class="w-full h-full object-cover rounded-[35px]"
