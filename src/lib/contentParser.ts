@@ -2,6 +2,12 @@ import { getEntry, getCollection, type CollectionKey } from "astro:content";
 import type { GenericEntry } from "@/types";
 import { SITE_INFO } from "@lib/config";
 
+//因为以下数据是在构建时计算出来的，所以需要在构建时获取一次，后续直接使用缓存值
+let blogCount = -1;
+let categoriesCount = -1;
+let tagsCount = -1;
+let totalWordCount = -1;
+
 export const getIndex = async (collection: CollectionKey): Promise<GenericEntry | undefined> => {
   const index = await getEntry(collection, "-index");
   return index as GenericEntry | undefined;
@@ -98,12 +104,16 @@ export const getEntriesInGroup = async (
 
 // 获取文章总数（静态模式）
 export const getBlogCount = async (): Promise<number> => {
+  if (blogCount !== -1) return blogCount;
   const entries = await getEntries("blog");
-  return entries.length;
+  const notes = await getEntries("notes");
+  blogCount = entries.length + notes.length;
+  return blogCount;
 };
 
 // 获取分类总数（静态模式）- 从博客文章中提取
 export const getCategoriesCount = async (): Promise<number> => {
+  if (categoriesCount !== -1) return categoriesCount;
   try {
     const blogEntries = await getEntries("blog");
     const categories = new Set<string>();
@@ -121,7 +131,8 @@ export const getCategoriesCount = async (): Promise<number> => {
       }
     });
     
-    return categories.size;
+    categoriesCount = categories.size;
+    return categoriesCount;
   } catch (error) {
     return 0;
   }
@@ -129,6 +140,7 @@ export const getCategoriesCount = async (): Promise<number> => {
 
 // 获取标签总数（静态模式）- 从博客文章中提取
 export const getTagsCount = async (): Promise<number> => {
+  if (tagsCount !== -1) return tagsCount;
   try {
     const blogEntries = await getEntries("blog");
     const tags = new Set<string>();
@@ -141,7 +153,8 @@ export const getTagsCount = async (): Promise<number> => {
       }
     });
     
-    return tags.size;
+    tagsCount = tags.size;
+    return tagsCount;
   } catch (error) {
     return 0;
   }
@@ -153,8 +166,6 @@ const countWords = (text: string): number => {
   
   // 移除 Markdown 语法和 HTML 标签
   const cleanText = text
-    .replace(/```[\s\S]*?```/g, '') // 移除代码块
-    .replace(/`[^`]*`/g, '') // 移除行内代码
     .replace(/<[^>]*>/g, '') // 移除 HTML 标签
     .replace(/!\[[^\]]*\]\([^)]*\)/g, '') // 移除图片
     .replace(/\[[^\]]*\]\([^)]*\)/g, '') // 移除链接
@@ -175,6 +186,7 @@ const countWords = (text: string): number => {
 
 // 获取全站字数统计
 export const getTotalWordCount = async (): Promise<string> => {
+  if (totalWordCount !== -1) return totalWordCount.toString();
   try {
     const [blogEntries, notesEntries] = await Promise.all([
       getEntries("blog"),
@@ -199,7 +211,8 @@ export const getTotalWordCount = async (): Promise<string> => {
     } else if (totalWords >= 1000) {
       return `${(totalWords / 1000).toFixed(1)}K`;
     }
-    return totalWords.toString();
+    totalWordCount = totalWords;
+    return totalWordCount.toString();
   } catch (error) {
     console.error('Error calculating total word count:', error);
     return "0";
