@@ -1,15 +1,15 @@
 ---
-title: 欢迎使用 MapleBlog
-description: 本文是 MapleBlog 的默认示例，帮助你快速了解如何使用本系统发布内容。MapleBlog 是一款轻量级、开源的内容管理系统，专为个人博客、文档站点与小团队协作设计。
+title: 欢迎来到小白的天地
+description: 本文是小白天地的介绍文章，帮助你快速了解这个记录生活感悟、分享人生体验的空间。
 createdAt: 2025-11-17
 updatedAt: 2025-11-17
 categories:
-  - 使用说明
-author: Maple
+  - 生活感悟
+author: 小白
 image: "@assets/uploads/demo.jpg"
 tags:
-  - 文章
-  - 示例
+  - 生活
+  - 感悟
 draft: false
 hideToc: false
 ---

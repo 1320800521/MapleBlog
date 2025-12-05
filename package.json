@@ -1,8 +1,8 @@
 {
-  "name": "MapleBlog",
+  "name": "小白天地",
   "version": "1.0.1",
-  "description": "Template.",
-  "author": "Maple",
+  "description": "小白天地 - 一个记录生活感悟、分享人生体验的个人空间，在这里与志同道合的朋友一起探索生活的美好。",
+  "author": "小白",
   "license": "MIT",
   "repository": {
     "type": "git",
