@@ -5,6 +5,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import { fileURLToPath } from 'url';
 
+export const prerender = false;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '../../../..');
