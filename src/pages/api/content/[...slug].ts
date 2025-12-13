@@ -8,10 +8,14 @@ import { fileURLToPath } from 'url';
 // 明确指定此为服务器渲染路由
 export const prerender = false;
 
-// 为满足构建系统要求提供getStaticPaths，但返回空数组以避免预生成页面
+// 为满足构建系统要求提供getStaticPaths
 export async function getStaticPaths() {
-  // API路由不需要预生成静态页面，返回空数组
-  return [];
+  // API路由不需要预生成静态页面，但需要返回至少一个路径以满足构建要求
+  return [
+    {
+      params: { slug: "example" }
+    }
+  ];
 }
 
 
